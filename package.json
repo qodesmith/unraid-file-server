@@ -1,5 +1,5 @@
 {
-  "name": "unraid-icon-server",
+  "name": "unraid-file-server",
   "module": "index.ts",
   "type": "module",
   "private": true,
