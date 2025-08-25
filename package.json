@@ -1,0 +1,19 @@
+{
+  "name": "unraid-icon-server",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "check": "biome check",
+    "check:fix": "biome check --write .",
+    "lint": "biome lint",
+    "lint:fix": "biome lint --write .",
+    "format": "biome format",
+    "format:fix": "biome format --write ."
+  },
+  "devDependencies": {
+    "@qodestack/biome-config": "^2.2.0",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {"typescript": "^5"}
+}
