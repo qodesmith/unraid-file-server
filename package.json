@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "scripts": {
+    "start": "bun --bun run index.ts",
     "check": "biome check",
     "check:fix": "biome check --write .",
     "lint": "biome lint",
@@ -15,5 +16,10 @@
     "@qodestack/biome-config": "^2.2.0",
     "@types/bun": "latest"
   },
-  "peerDependencies": {"typescript": "^5"}
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@qodestack/utils": "^2.23.0"
+  }
 }

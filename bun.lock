@@ -3,6 +3,9 @@
   "workspaces": {
     "": {
       "name": "unraid-icon-server",
+      "dependencies": {
+        "@qodestack/utils": "^2.23.0",
+      },
       "devDependencies": {
         "@qodestack/biome-config": "^2.2.0",
         "@types/bun": "latest",
@@ -32,6 +35,8 @@
     "@biomejs/cli-win32-x64": ["@biomejs/cli-win32-x64@2.2.0", "", { "os": "win32", "cpu": "x64" }, "sha512-Nawu5nHjP/zPKTIryh2AavzTc/KEg4um/MxWdXW0A6P/RZOyIpa7+QSjeXwAwX/utJGaCoXRPWtF3m5U/bB3Ww=="],
 
     "@qodestack/biome-config": ["@qodestack/biome-config@2.2.0", "", { "dependencies": { "@biomejs/biome": "2.2.0", "gradient-string": "^3.0.0", "jsonc-parser": "^3.3.1", "picocolors": "^1.1.1" }, "bin": { "biomeInit": "src/cli.mjs" } }, "sha512-9PPxDdhVW39Lxe1MEfrYecbjN7gpKktzE99LuP8vOkCiAX0lbdNzkAZjSBoNJ5P2S18fGItiyNUHBNUf/XEfsA=="],
+
+    "@qodestack/utils": ["@qodestack/utils@2.23.0", "", { "peerDependencies": { "typescript": "^5.9.2" } }, "sha512-G2Jy2+irrWa/HkNtD9tMbKdz3OXsbGub6bUuFqRzSd/M4sqick9sXzN6s3HqUW/oLBiv1p69Xk3V7MzkK6YaVg=="],
 
     "@types/bun": ["@types/bun@1.2.20", "", { "dependencies": { "bun-types": "1.2.20" } }, "sha512-dX3RGzQ8+KgmMw7CsW4xT5ITBSCrSbfHc36SNT31EOUg/LA9JWq0VDdEXDRSe1InVWpd2yLUM1FUF/kEOyTzYA=="],
 
