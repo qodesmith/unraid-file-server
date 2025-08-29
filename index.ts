@@ -15,17 +15,23 @@ invariant(HEADER_SECRET, '`HEADER_SECRET` env variable not defined')
 const bunServer = serve({
   routes: {
     '/files/*': {
-      GET: async (req, _server) => {
+      GET: async (req, server) => {
+        const {pathname} = new URL(req.url)
+
         if (
           SECRET_HEADER &&
           HEADER_SECRET &&
           req.headers.get(SECRET_HEADER) === HEADER_SECRET
         ) {
-          const {pathname} = new URL(req.url)
-
-          // TODO - funnel IP info into the error handler when this throws
-          new Response(Bun.file(pathname))
+          return new Response(Bun.file(pathname))
         }
+
+        log.error({
+          message: 'Missing or bad header data',
+          pathname,
+          ip: server.requestIP(req),
+          headers: req.headers,
+        })
 
         return new Response('-_-', {
           status: 400,
@@ -39,14 +45,18 @@ const bunServer = serve({
   port: PORT,
   development: false,
   error: error => {
+    if (error.code === 'ENOENT') {
+      return new Response('Not found', {
+        status: 404,
+        headers: {
+          'Content-Type': 'text/plain',
+        },
+      })
+    }
+
     log.error(errorToObject(error))
 
-    return new Response('Not found', {
-      status: 500,
-      headers: {
-        'Content-Type': 'text/plain',
-      },
-    })
+    return new Response(null, {status: 500})
   },
 })
 
