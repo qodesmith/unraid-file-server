@@ -1,13 +1,8 @@
 import {serve} from 'bun'
 import {readdirSync} from 'node:fs'
 
-import {createLogger, errorToObject, invariant} from '@qodestack/utils'
+import {createLogger, errorToObject} from '@qodestack/utils'
 import {Hono} from 'hono'
-import {getConnInfo} from 'hono/bun'
-
-// Avoid importing from 'node:process' so that Bun can replace process.env.* with static values.
-invariant(process.env.SECRET_HEADER, '`SECRET_HEADER` env variable not defined')
-invariant(process.env.HEADER_SECRET, '`HEADER_SECRET` env variable not defined')
 
 const log = createLogger({timeZone: 'America/New_York'})
 
@@ -30,23 +25,6 @@ const honoServer = new Hono()
     return c.html(
       `<body style="${style}"><div><div>Unraid File Server</div><div>-_-</div></div></body>`
     )
-  })
-  .use(async (c, next) => {
-    const headerSecret = c.req.header(process.env.SECRET_HEADER as string)
-    const {pathname} = new URL(c.req.url)
-
-    if (headerSecret && headerSecret === process.env.HEADER_SECRET) {
-      await next()
-    } else {
-      log.error({
-        message: 'Missing or bad header data',
-        pathname,
-        ipInfo: getConnInfo(c),
-        headers: c.req.raw.headers,
-      })
-
-      return c.json({nope: true})
-    }
   })
   .get('/list', c => {
     const listPath = c.req.query('path')
