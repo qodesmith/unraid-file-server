@@ -4,11 +4,12 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "start": "bun --bun run index.ts",
-    "docker": "bun run docker:build && bun run docker:push",
-    "docker:local": "docker build -t unraid-file-server:latest .",
+    "dev": "bun ndex.ts",
+    "docker": "bun run build && bun run docker:build && bun run docker:push",
+    "build": "bun run build.ts",
     "docker:build": "docker build -t 192.168.68.50:5000/unraid-file-server:latest --platform=linux/amd64 .",
     "docker:push": "docker push 192.168.68.50:5000/unraid-file-server:latest",
+    "docker:local": "docker build -t unraid-file-server:latest .",
     "check": "biome check",
     "check:fix": "biome check --write .",
     "lint": "biome lint",
@@ -21,7 +22,7 @@
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^5"
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@qodestack/utils": "^2.23.0",

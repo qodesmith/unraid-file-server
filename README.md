@@ -1,3 +1,3 @@
-# unraid-icon-server
+# unraid-file-server
 
-<!-- TODO: capture instructions on setting up Unraid Docker container -->
+A simple file server for Unraid using Bun and Hono.

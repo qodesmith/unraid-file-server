@@ -1,13 +1,18 @@
-FROM oven/bun:slim
-
-COPY package.json bun.lock .env index.ts /app/
-
+FROM alpine
+RUN apk add --no-cache libstdc++
+COPY unraidFileServer /app/
 WORKDIR /app
-
-RUN bun upgrade && bun install --frozen-lockfile --production
-
 EXPOSE 2500
+ENTRYPOINT ["./unraidFileServer"]
 
-ENV NODE_ENV=production
+######################################################
+# Dockerfile contents when using Bun the typical way #
+######################################################
 
-CMD ["bun", "index.ts"]
+# FROM oven/bun:slim
+# COPY package.json bun.lock .env index.ts /app/
+# WORKDIR /app
+# RUN bun upgrade && bun install --frozen-lockfile --production
+# EXPOSE 2500
+# ENV NODE_ENV=production
+# CMD ["bun", "index.ts"]
