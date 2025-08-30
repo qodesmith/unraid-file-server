@@ -33,16 +33,18 @@ const honoServer = new Hono()
       return c.json({nope: true})
     }
   })
-  .get('/list', c => c.json({'/list': readdirSync('/files')}))
-  .get('/list/*', c => {
-    const {pathname} = new URL(c.req.url)
-    const filePath = `/files/${pathname}`
+  .get('/list', c => {
+    const listPath = c.req.query('path')
+
+    if (!listPath) {
+      return c.json({'/list': readdirSync('/files')})
+    }
 
     try {
-      const list = readdirSync(filePath)
-      return c.json({[filePath]: list})
+      const list = readdirSync(listPath)
+      return c.json({[listPath]: list})
     } catch (e) {
-      return c.json({error: errorToObject(e), filePath, pathname})
+      return c.json({error: errorToObject(e), listPath})
     }
   })
   .get('/files/*', c => {
