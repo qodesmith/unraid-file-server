@@ -16,6 +16,25 @@ invariant(SECRET_HEADER, '`SECRET_HEADER` env variable not defined')
 invariant(HEADER_SECRET, '`HEADER_SECRET` env variable not defined')
 
 const honoServer = new Hono()
+  .get('/', c => {
+    const styles = {
+      color: 'white',
+      background: 'black',
+      display: 'grid',
+      'place-items': 'center',
+      'font-family': 'monospace',
+      'font-size': '2em',
+      'text-align': 'center',
+    }
+
+    const style = Object.entries(styles).reduce((acc, [key, value]) => {
+      return `${acc}${key}:${value};`
+    }, '')
+
+    return c.html(
+      `<body style="${style}"><div><div>Unraid File Server</div><div>-_-</div></div></body>`
+    )
+  })
   .use(async (c, next) => {
     const headerSecret = c.req.header(SECRET_HEADER)
     const {pathname} = new URL(c.req.url)
