@@ -1,0 +1,13 @@
+FROM oven/bun:slim
+
+COPY package.json bun.lock .env index.ts /app/
+
+WORKDIR /app
+
+RUN bun upgrade && bun install --frozen-lockfile --production
+
+EXPOSE 2500
+
+ENV NODE_ENV=production
+
+CMD ["bun", "index.ts"]
