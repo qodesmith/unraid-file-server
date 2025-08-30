@@ -8,10 +8,9 @@ import {createLogger, errorToObject, invariant} from '@qodestack/utils'
 import {Hono} from 'hono'
 import {getConnInfo} from 'hono/bun'
 
-const {PORT, SECRET_HEADER, HEADER_SECRET} = process.env
+const {SECRET_HEADER, HEADER_SECRET} = process.env
 const log = createLogger({timeZone: 'America/New_York'})
 
-invariant(PORT, '`PORT` env variable not defined')
 invariant(SECRET_HEADER, '`SECRET_HEADER` env variable not defined')
 invariant(HEADER_SECRET, '`HEADER_SECRET` env variable not defined')
 
@@ -78,7 +77,7 @@ const honoServer = new Hono()
 
 const bunServer = serve({
   fetch: honoServer.fetch,
-  port: PORT,
+  port: 2500,
   development: false,
   error: error => {
     log.error('BUN SERVER ERROR', errorToObject(error))
