@@ -1,18 +1,15 @@
-/** biome-ignore-all lint/style/useNamingConvention: it's ok */
-
 import {serve} from 'bun'
 import {readdirSync} from 'node:fs'
-import process from 'node:process'
 
 import {createLogger, errorToObject, invariant} from '@qodestack/utils'
 import {Hono} from 'hono'
 import {getConnInfo} from 'hono/bun'
 
-const {SECRET_HEADER, HEADER_SECRET} = process.env
-const log = createLogger({timeZone: 'America/New_York'})
+// Avoid importing from 'node:process' so that Bun can replace process.env.* with static values.
+invariant(process.env.SECRET_HEADER, '`SECRET_HEADER` env variable not defined')
+invariant(process.env.HEADER_SECRET, '`HEADER_SECRET` env variable not defined')
 
-invariant(SECRET_HEADER, '`SECRET_HEADER` env variable not defined')
-invariant(HEADER_SECRET, '`HEADER_SECRET` env variable not defined')
+const log = createLogger({timeZone: 'America/New_York'})
 
 const honoServer = new Hono()
   .get('/', c => {
@@ -35,10 +32,10 @@ const honoServer = new Hono()
     )
   })
   .use(async (c, next) => {
-    const headerSecret = c.req.header(SECRET_HEADER)
+    const headerSecret = c.req.header(process.env.SECRET_HEADER as string)
     const {pathname} = new URL(c.req.url)
 
-    if (headerSecret && headerSecret === HEADER_SECRET) {
+    if (headerSecret && headerSecret === process.env.HEADER_SECRET) {
       await next()
     } else {
       log.error({
@@ -85,5 +82,4 @@ const bunServer = serve({
   },
 })
 
-// biome-ignore lint/suspicious/noConsole: it's ok
-console.log(`🚀 Server running at ${bunServer.url.href}`)
+log.success(`🚀 Server running at ${bunServer.url.href}`)

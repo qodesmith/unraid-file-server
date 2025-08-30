@@ -4,5 +4,17 @@
   "files": {
     "ignoreUnknown": true,
     "includes": ["**", "!**/node_modules", "!dist", "!*.lock"]
-  }
+  },
+  "overrides": [
+    {
+      "includes": ["*.ts"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noProcessGlobal": "off"
+          }
+        }
+      }
+    }
+  ]
 }
