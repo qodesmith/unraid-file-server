@@ -11,20 +11,25 @@ const honoServer = new Hono()
     const styles = {
       color: 'white',
       background: 'black',
-      display: 'grid',
-      'place-items': 'center',
       'font-family': 'monospace',
       'font-size': '2em',
-      'text-align': 'center',
+      height: '100%',
+      display: 'flex',
+      'flex-direction': 'column',
+      'justify-content': 'center',
+      'align-items': 'center',
     }
 
     const style = Object.entries(styles).reduce((acc, [key, value]) => {
       return `${acc}${key}:${value};`
     }, '')
 
-    return c.html(
-      `<body style="${style}"><div><div>Unraid File Server</div><div>-_-</div></div></body>`
-    )
+    return c.html(`
+      <body style="${style}">
+        <div>Unraid File Server</div>
+        <div>-_-</div>
+      </body>
+    `)
   })
   .get('/list', c => {
     const listPath = c.req.query('path')
