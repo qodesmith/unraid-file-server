@@ -1,3 +1,5 @@
+# ~107.54 MB
+
 FROM alpine
 RUN apk add --no-cache libstdc++
 COPY unraidFileServer /app/
@@ -9,8 +11,10 @@ ENTRYPOINT ["./unraidFileServer"]
 # Dockerfile contents when using Bun the typical way #
 ######################################################
 
+# ~218.53 MB
+
 # FROM oven/bun:slim
-# COPY package.json bun.lock .env index.ts /app/
+# COPY package.json bun.lock index.ts /app/
 # WORKDIR /app
 # RUN bun upgrade && bun install --frozen-lockfile --production
 # EXPOSE 2500
